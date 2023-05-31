@@ -11,4 +11,4 @@ jobs:
             - name: show docker version
               run: docker --version
             - name: build docker image
-              run: docker build -t BasePython:v1 -f Dockerfile.base-python
+              run: docker build -t python:personal-v1 -f Dockerfile.base-python .

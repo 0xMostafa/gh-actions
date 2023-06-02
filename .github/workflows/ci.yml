@@ -3,7 +3,7 @@ run-name: Build & Push New Docker Image
 on: [push]
 
 jobs:
-    push-and-push-to-dockerhub:
+    build-and-push-to-container-registries:
         runs-on: ubuntu-latest
         steps:
             - name: checkout code
@@ -16,14 +16,14 @@ jobs:
                 username: ${{ secrets.DOCKERHUB_USERNAME }}
                 password: ${{ secrets.DOCKERHUB_TOKEN }}
                 logout: true
-            - name: Login to ghcr.io
+            - name: Login to Github Container Registry
               uses: docker/login-action@v2
               with:
                 registry: ghcr.io
                 username: ${{ github.repository_owner }}
                 password: ${{ secrets.GITHUB_TOKEN }}
                 logout: true
-            - name: Build and Push to DockerHub
+            - name: Build and Push to DockerHub & Github Container Registry (ghcr.io)
               uses: docker/build-push-action@v4
               with:
                 context: .

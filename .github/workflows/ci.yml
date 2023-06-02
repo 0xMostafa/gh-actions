@@ -33,10 +33,6 @@ jobs:
               run: echo "OWNER_LC=${OWNER,,}" >> ${GITHUB_ENV}
               env:
                 OWNER: '${{ github.repository_owner }}'
-            - name: print owner name
-              run: echo $OWNER
-            - name: print owner lc name
-              run: echo $OWNER_LC
             - name: Build and Push to DockerHub & Github Container Registry (ghcr.io)
               uses: docker/build-push-action@v4
               with:
@@ -47,4 +43,4 @@ jobs:
                   PYTHON_VERSION=${{ matrix.python-version }}
                 tags: |
                   ${{ secrets.DOCKERHUB_USERNAME }}/python:${{ matrix.python-version }}-ihr
-                  ghcr.io/$OWNER_LC/python:${{ matrix.python-version }}-ihr
+                  ghcr.io/${{ env.OWNER_LC }}/python:${{ matrix.python-version }}-ihr

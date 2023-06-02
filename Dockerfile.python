@@ -1,5 +1,8 @@
 # sytax=docker/dockerfile:1
 
-FROM python:3.8-slim-buster AS BasePython
+ARG PYTHON_VERSION="3.8"
+ARG IMAGE_PLATFORM="slim-buster"
+
+FROM python:${PYTHON_VERSION}-${IMAGE_PLATFORM} AS python
 
 LABEL "publisher.name"="Mostafa ElGendi"

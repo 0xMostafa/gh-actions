@@ -1,9 +1,12 @@
 name: ci
 run-name: Build & Push New Docker Image
-on: [push]
+on: [
+    push,
+    workflow_dispatch
+]
 
 jobs:
-    build-and-push-to-container-registries:
+    push:
         runs-on: ubuntu-latest
         steps:
             - name: checkout code
@@ -23,12 +26,17 @@ jobs:
                 username: ${{ github.repository_owner }}
                 password: ${{ secrets.GITHUB_TOKEN }}
                 logout: true
+            - name: Image Metadata
+              id: metadata
+              uses: docker/metadata-action@v4
+              with:
+                images:
+                    0xmstfa/scratch
             - name: Build and Push to DockerHub & Github Container Registry (ghcr.io)
               uses: docker/build-push-action@v4
               with:
                 context: .
-                file: ./Dockerfile.base-python
+                file: ./Dockerfile.scratch
                 push: true
-                tags: |
-                    ${{ secrets.DOCKERHUB_USERNAME }}/python:latest
-                    ghcr.io/0xmostafa/python:latest
+                tags: ${{ steps.metadata.outputs.tags }}
+                labels: ${{ steps.metadata.outputs.labels }}

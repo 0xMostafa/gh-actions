@@ -39,3 +39,4 @@ jobs:
                   PYTHON_VERSION=${{ matrix.python-version }}
                 tags:
                   ${{ secrets.DOCKERHUB_USERNAME }}/python:${{ matrix.python-version }}-ihr
+                  ghcr.io/0xmostafa/python:${{ matrix.python-version }}-ihr

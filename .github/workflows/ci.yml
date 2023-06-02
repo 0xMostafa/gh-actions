@@ -29,6 +29,10 @@ jobs:
                 username: ${{ github.repository_owner }}
                 password: ${{ secrets.GITHUB_TOKEN }}
                 logout: true
+            - name: set lower case owner name
+              run: echo "OWNER_LC=${OWNER,,}" >> ${GITHUB_ENV}
+              env:
+                OWNER: '${{ github.repository_owner }}'
             - name: Build and Push to DockerHub & Github Container Registry (ghcr.io)
               uses: docker/build-push-action@v4
               with:
@@ -39,4 +43,4 @@ jobs:
                   PYTHON_VERSION=${{ matrix.python-version }}
                 tags: |
                   ${{ secrets.DOCKERHUB_USERNAME }}/python:${{ matrix.python-version }}-ihr
-                  ghcr.io/0xmostafa/python:${{ matrix.python-version }}-ihr
+                  ghcr.io/$OWNER_LC/python:${{ matrix.python-version }}-ihr

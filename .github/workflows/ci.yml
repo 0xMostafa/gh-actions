@@ -36,5 +36,4 @@ jobs:
                 file: ./Dockerfile.python
                 push: true
                 tags:
-                  0xmstfa/python:${{ matrix.python-version }}-ihr
-                  ghcr.io/0xmostafa/python:${{ matrix.python-version }}-ihr
+                  ${{ secrets.DOCKERHUB_USERNAME }}/python:${{ matrix.python-version }}-ihr
